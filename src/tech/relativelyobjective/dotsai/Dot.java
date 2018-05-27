@@ -8,17 +8,22 @@ import com.sun.prism.paint.Color;
  * @author Christian Russell (me@relativelyobjective.tech)
  */
 public class Dot {
+	private boolean completed = false;
+	private int completedStepsCount = 0;
+	private Color color = Color.GREEN;
 	public Position pos;
+	public DNA dna;
 	
 	public Dot() {
 		pos = new Position();
+		dna = new DNA();
 	}
 	public Dot(int x, int y) {
 		pos = new Position(x, y);
+		dna = new DNA();
 	}
 	public void draw(GL2 gl) {
-		Color color = getColor();
-		gl.glColor3f(color.getRed(), color.getGreen(), color.getBlue());
+		gl.glColor3f((float) color.getRed(), (float) color.getGreen(), (float) color.getBlue());
 		gl.glBegin(GL2.GL_QUADS);
 		//System.out.println(sprite.displayInfo[w][h].toString());
 		gl.glVertex2f(pos.x, pos.y);
@@ -27,8 +32,28 @@ public class Dot {
 		gl.glVertex2f(pos.x, pos.y + 1);
 		gl.glEnd();
 	}
-	private Color getColor() {
-		//TODO color based on fitness
-		return Color.BLACK;
+	public void move(int step) {
+		Movement mov = dna.movements[step];
+		pos.x += mov.xVec;
+		pos.y += mov.yVec;
+		color = new Color(
+			((float) step) / ((float) DNA.movementLength), 
+			((float) DNA.movementLength-step) / ((float) DNA.movementLength), 
+			0,
+			color.getAlpha()
+		);
+	}
+	public Color getColor() {
+		return color;
+	}
+	public void setComplete(int steps) {
+		completed = true;
+		completedStepsCount = steps;
+	}
+	public boolean isCompleted() {
+		return completed;
+	}
+	public int getCompletedStepsCount() {
+		return completedStepsCount;
 	}
 }

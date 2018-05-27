@@ -3,6 +3,9 @@ package tech.relativelyobjective.dotsai;
 import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
+import com.jogamp.opengl.util.awt.TextRenderer;
+import java.awt.Color;
+import java.awt.Font;
 
 /**
  *
@@ -10,6 +13,7 @@ import com.jogamp.opengl.GLEventListener;
  */
 public class RenderListener implements GLEventListener {
 	private static float extraWidth=0, extraHeight=0, scale=1;
+	private static TextRenderer tr = getTextRenderer();
 	@Override
 	public void init(GLAutoDrawable glad) {
 		GL2 gl = glad.getGL().getGL2();
@@ -28,7 +32,6 @@ public class RenderListener implements GLEventListener {
 		//Draw white background
 		gl.glColor3f(1, 1, 1);
 		gl.glBegin(GL2.GL_QUADS);
-		//System.out.println(sprite.displayInfo[w][h].toString());
 		gl.glVertex2f(0, 0);
 		gl.glVertex2f(WindowManager.RESOLUTION_WIDTH, 0);
 		gl.glVertex2f(WindowManager.RESOLUTION_WIDTH, WindowManager.RESOLUTION_HEIGHT);
@@ -37,6 +40,20 @@ public class RenderListener implements GLEventListener {
 		for (Dot d : DotsAI.dots) {
 			d.draw(gl);
 		}
+		//Draw Labels
+		tr.beginRendering(
+			(int)WindowManager.RESOLUTION_WIDTH+(int)(RenderListener.getExtraWidth()),
+			(int)WindowManager.RESOLUTION_HEIGHT+(int)(RenderListener.getExtraHeight())
+		);
+		tr.setColor(Color.BLACK);
+		tr.setSmoothing(false);
+		float xMod=0, yMod=0;
+		if (RenderListener.getScale() > 0) {
+			xMod = RenderListener.getExtraWidth()/2;
+			yMod = RenderListener.getExtraHeight()/2;
+		}
+		tr.draw(String.format("Step: %d", DotsAI.step), (int) 15+(int)xMod, (int)90+(int)yMod);
+		tr.endRendering();
 	}
 	@Override
 	public void reshape(GLAutoDrawable glad, int x, int y, int w, int h) {
@@ -78,5 +95,9 @@ public class RenderListener implements GLEventListener {
 	}
 	public static float getScale() {
 		return scale;
+	}
+	private static TextRenderer getTextRenderer() {
+		TextRenderer returnMe = new TextRenderer(new Font("Helvetica", Font.PLAIN, 12));
+		return returnMe;
 	}
 }
