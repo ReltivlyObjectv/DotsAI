@@ -34,9 +34,9 @@ public class RenderListener implements GLEventListener {
 		gl.glVertex2f(WindowManager.RESOLUTION_WIDTH, WindowManager.RESOLUTION_HEIGHT);
 		gl.glVertex2f(0, WindowManager.RESOLUTION_HEIGHT);
 		gl.glEnd();
-		//TODO Draw Dots
-		Dot dot = new Dot();
-		dot.draw(gl);
+		for (Dot d : DotsAI.dots) {
+			d.draw(gl);
+		}
 	}
 	@Override
 	public void reshape(GLAutoDrawable glad, int x, int y, int w, int h) {
