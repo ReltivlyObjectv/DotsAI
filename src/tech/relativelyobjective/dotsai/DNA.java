@@ -11,7 +11,7 @@ package tech.relativelyobjective.dotsai;
  * @author Christian Russell (me@relativelyobjective.tech)
  */
 public class DNA {
-	public static final int movementLength = 1000;
+	public static final int movementLength = 2500;
 	
 	public Movement[] movements;
 	

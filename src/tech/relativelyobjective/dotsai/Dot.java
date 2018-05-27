@@ -18,8 +18,8 @@ public class Dot {
 		pos = new Position();
 		dna = new DNA();
 	}
-	public Dot(int x, int y) {
-		pos = new Position(x, y);
+	public Dot(Position p) {
+		pos = new Position(p);
 		dna = new DNA();
 	}
 	public void draw(GL2 gl) {
@@ -42,6 +42,17 @@ public class Dot {
 			0,
 			color.getAlpha()
 		);
+	}
+	public static Dot breed(Dot parentA, Dot parentB) {
+		Dot childDot = new Dot(DotsAI.startingPosition);
+		for (int i = 0; i < DNA.movementLength; i++) {
+			if (Math.random() < .5) {
+				childDot.dna.movements[i] = parentA.dna.movements[i];
+			} else {
+				childDot.dna.movements[i] = parentB.dna.movements[i];
+			}
+		}
+		return childDot;
 	}
 	public Color getColor() {
 		return color;

@@ -37,6 +37,7 @@ public class RenderListener implements GLEventListener {
 		gl.glVertex2f(WindowManager.RESOLUTION_WIDTH, WindowManager.RESOLUTION_HEIGHT);
 		gl.glVertex2f(0, WindowManager.RESOLUTION_HEIGHT);
 		gl.glEnd();
+		Objective.render(gl);
 		for (Dot d : DotsAI.dots) {
 			d.draw(gl);
 		}
@@ -52,7 +53,21 @@ public class RenderListener implements GLEventListener {
 			xMod = RenderListener.getExtraWidth()/2;
 			yMod = RenderListener.getExtraHeight()/2;
 		}
-		tr.draw(String.format("Step: %d", DotsAI.step), (int) 15+(int)xMod, (int)90+(int)yMod);
+		tr.draw(
+			String.format("Step: %d", DotsAI.step),
+			10+(int)xMod,
+			(int)WindowManager.RESOLUTION_HEIGHT-20+(int)yMod
+		);
+		tr.draw(
+			String.format("Completed: %d", DotsAI.genePool.size()),
+			10+(int)xMod,
+			(int)WindowManager.RESOLUTION_HEIGHT-35+(int)yMod
+		);
+		tr.draw(
+			String.format("Generation: %d", DotsAI.generation),
+			10+(int)xMod,
+			(int)WindowManager.RESOLUTION_HEIGHT-50+(int)yMod
+		);
 		tr.endRendering();
 	}
 	@Override
