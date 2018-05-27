@@ -17,12 +17,10 @@ public class RenderListener implements GLEventListener {
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBlendFunc(GL2.GL_SRC_ALPHA, GL2.GL_ONE_MINUS_SRC_ALPHA);
 	}
-
 	@Override
 	public void dispose(GLAutoDrawable glad) {
 		System.exit(0);
 	}
-
 	@Override
 	public void display(GLAutoDrawable glad) {
 		GL2 gl = glad.getGL().getGL2();
@@ -40,7 +38,6 @@ public class RenderListener implements GLEventListener {
 		Dot dot = new Dot();
 		dot.draw(gl);
 	}
-
 	@Override
 	public void reshape(GLAutoDrawable glad, int x, int y, int w, int h) {
 		float renderWidth = 0;
