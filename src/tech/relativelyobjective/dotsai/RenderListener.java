@@ -68,6 +68,11 @@ public class RenderListener implements GLEventListener {
 			10+(int)xMod,
 			(int)WindowManager.RESOLUTION_HEIGHT-50+(int)yMod
 		);
+		tr.draw(
+			String.format("Best: %d", DotsAI.bestStep),
+			10+(int)xMod,
+			(int)WindowManager.RESOLUTION_HEIGHT-65+(int)yMod
+		);
 		tr.endRendering();
 	}
 	@Override

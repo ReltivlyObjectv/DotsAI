@@ -8,6 +8,7 @@ public class DotsAI {
 	public static final Position startingPosition = new Position(100,100);
 	public static final int populationSize = 500;
 	public static final int genePoolSize = 50;
+	public static int bestStep = DNA.movementLength;
 	public static int step = 0;
 	public static int generation = 1;
 	
@@ -21,6 +22,9 @@ public class DotsAI {
 				if (!d.isCompleted()) {
 					d.move(step);
 					if (Objective.isInsideObjective(d)) {
+						if (step < bestStep) {
+							bestStep = step;
+						}
 						d.setComplete(step);
 						genePool.add(d);
 						if (genePool.size() >= genePoolSize) {

@@ -46,10 +46,13 @@ public class Dot {
 	public static Dot breed(Dot parentA, Dot parentB) {
 		Dot childDot = new Dot(DotsAI.startingPosition);
 		for (int i = 0; i < DNA.movementLength; i++) {
-			if (Math.random() < .5) {
+			double rand = Math.random();
+			if (rand < .5) {
 				childDot.dna.movements[i] = parentA.dna.movements[i];
-			} else {
+			} else if (rand < .999) {
 				childDot.dna.movements[i] = parentB.dna.movements[i];
+			} else {
+				childDot.dna.movements[i] = Movement.randomMovement();
 			}
 		}
 		return childDot;
