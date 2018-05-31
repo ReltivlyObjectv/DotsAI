@@ -6,7 +6,7 @@ public class DotsAI {
 	public static final LinkedList<Dot> dots = new LinkedList<>();
 	public static final LinkedList<Dot> genePool = new LinkedList<>();
 	public static final Position startingPosition = new Position(100,100);
-	public static final int populationSize = 500;
+	public static final int populationSize = 2500;
 	public static final int genePoolSize = 50;
 	public static int bestStep = DNA.movementLength;
 	public static int step = 0;
@@ -51,15 +51,38 @@ public class DotsAI {
 	public static void breedAndRestart() {
 		dots.clear();
 		for (int i = 0; i < populationSize; i++) {
-			int parentAIndex = (int) (Math.random() * genePool.size());
-			Dot parentA = genePool.get(parentAIndex);
-			int parentBIndex = (int) (Math.random() * genePool.size());
-			Dot parentB = genePool.get(parentBIndex);
+			Dot parentA = getRandomDotByFitness();
+			Dot parentB = getRandomDotByFitness();
 			dots.add(Dot.breed(parentA, parentB));
 		}
 		genePool.clear();
 		step = 0;
 		generation++;
+	}
+	private static Dot getRandomDotByFitness() {
+		double top05Chance = .1d;
+		double top25Chance = .3d;
+		double top50Chance = .75d;
+		int index;
+		double random = Math.random();
+		//System.out.printf("Random Number: %f\n", random);
+		if (random < top05Chance) {
+			index = (int) ((genePool.size()*.05) * random);
+		} else if (random < top25Chance) {
+			index = (int) ((genePool.size()*.25) * random);
+		} else if (random < top50Chance) {
+			index = (int) ((genePool.size()*.50) * random);
+		} else {
+			index = (int) (genePool.size() * random);
+		}
+		//System.out.printf("Grabbing at index %d\n", index);
+		Dot dot;
+		try {
+			dot = genePool.get(index);
+		} catch (IndexOutOfBoundsException e) {
+			dot = genePool.peekLast();
+		}
+		return dot;
 	}
 }
 

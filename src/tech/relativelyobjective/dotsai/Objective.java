@@ -36,6 +36,5 @@ public class Objective {
 			d.pos.x < pos.x+width &&
 			d.pos.y >= pos.y &&
 			d.pos.y < pos.y+width;
-		
 	}
 }
