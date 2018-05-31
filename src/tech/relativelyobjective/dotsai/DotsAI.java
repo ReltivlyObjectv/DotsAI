@@ -51,9 +51,19 @@ public class DotsAI {
 	public static void breedAndRestart() {
 		dots.clear();
 		for (int i = 0; i < populationSize; i++) {
-			Dot parentA = getRandomDotByFitness();
-			Dot parentB = getRandomDotByFitness();
-			dots.add(Dot.breed(parentA, parentB));
+			if (i == 0) {
+				//Preserve the most fit dot
+				Dot identicalChild = new Dot(DotsAI.startingPosition);
+				Dot mostFitDot = genePool.getFirst();
+				for (int j = 0; j < mostFitDot.dna.movements.length; j++) {
+					identicalChild.dna.movements[j] = mostFitDot.dna.movements[j];
+				}
+				dots.add(identicalChild);
+			} else {
+				Dot parentA = getRandomDotByFitness();
+				Dot parentB = getRandomDotByFitness();
+				dots.add(Dot.breed(parentA, parentB));
+			}
 		}
 		genePool.clear();
 		step = 0;
